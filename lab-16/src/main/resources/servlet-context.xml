@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jaxws="http://cxf.apache.org/jaxws"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+
+    <bean id="hello" class="ws.HelloServiceImpl"/>
+
+    <bean id="passwordProvider" class="ws.util.PasswordProvider">
+        <property name="passwords">
+            <map>
+                <entry key="user1" value="password1"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="wssInInterceptor" class="org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor">
+        <constructor-arg>
+            <map>
+                <entry key="action" value="UsernameToken"/>
+                <entry key="passwordType" value="PasswordText"/>
+                <entry key="passwordCallbackRef" value-ref="passwordProvider"/>
+            </map>
+        </constructor-arg>
+    </bean>
+
+    <jaxws:endpoint implementor="#hello" address="/hello" wsdlLocation="classpath:hello-w-policy.wsdl">
+        <jaxws:inInterceptors>
+            <bean class="org.apache.cxf.interceptor.LoggingInInterceptor"/>
+            <ref bean="wssInInterceptor"/>
+        </jaxws:inInterceptors>
+    </jaxws:endpoint>
+
+</beans>

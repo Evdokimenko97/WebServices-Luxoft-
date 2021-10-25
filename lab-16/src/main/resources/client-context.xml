@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jaxws="http://cxf.apache.org/jaxws"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+
+
+    <bean class="ws.HelloClient">
+        <property name="client">
+            <jaxws:client
+                    createdFromAPI="true"
+                    name="{http://hello.ws/}hello"
+                    serviceClass="ws.hello.Hello"
+                    address="http://localhost:8080/ws/hello"
+                    wsdlLocation="classpath:hello-w-policy.wsdl">
+
+                <jaxws:properties>
+                    <entry key="ws-security.username" value="user1"/>
+                    <entry key="ws-security.password" value="password1"/>
+                </jaxws:properties>
+
+            </jaxws:client>
+        </property>
+    </bean>
+
+
+</beans>

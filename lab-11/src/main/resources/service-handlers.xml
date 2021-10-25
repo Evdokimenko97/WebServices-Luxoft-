@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<javaee:handler-chains xmlns:javaee="http://java.sun.com/xml/ns/javaee">
+    <javaee:handler-chain>
+        <javaee:handler>
+            <javaee:handler-class>ws.handlers.IpAddressValidator</javaee:handler-class>
+        </javaee:handler>
+        <javaee:handler>
+            <javaee:handler-class>ws.handlers.SoapMessageLogger</javaee:handler-class>
+        </javaee:handler>
+        <!--<javaee:handler>-->
+            <!--<javaee:handler-class>ws.handlers.SoapMessagePayloadLogger</javaee:handler-class>-->
+        <!--</javaee:handler>-->
+    </javaee:handler-chain>
+</javaee:handler-chains>
